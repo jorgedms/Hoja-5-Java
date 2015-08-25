@@ -14,5 +14,30 @@
 #   13171
 #
 
+#imports
+import simpy
+import random
+
+#variables
+
+
+#Cuerpo de programa
+#Titulo de inicio
 print ("Simulacion de corrida de programas en un Sistema Operativo de tiempo compartido.")
+
+#Objeto procesador
+def procesador():
+    print ("este es un procesador")
+
+#se crea el ambiente de simulacion
+env = simpy.Environment()
+#se crea el resource
+#new: lista para los nuevos procesos
+
+#ready: lista de procesos en espera a ser atendidos
+
+#running: procesos en ejecucion
+
+#waiting: procesos en espera
+
 

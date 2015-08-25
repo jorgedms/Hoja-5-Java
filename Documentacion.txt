@@ -1,0 +1,10 @@
+@------------------------------------------------------------
+Aqui se pueden agregar links a paginas que pueden ser utiles 
+para entender los modulos de simpy que estamos usando
+@------------------------------------------------------------
+
+source tipo Container
+https://simpy.readthedocs.org/en/3.0/api_reference/simpy.resources.container.html
+
+source tipo Resources
+https://simpy.readthedocs.org/en/3.0.2/api_reference/simpy.resources.resource.html
