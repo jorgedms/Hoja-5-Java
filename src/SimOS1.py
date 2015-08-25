@@ -58,9 +58,9 @@ def proceso(env, nproceso, ram, intrucc):
 # se crea el ambiente de simulacion
 env = simpy.Environment()
 #se define el la cantidad de ram
-ram = simpy.resources.container.Container(env, ram_cant, init=0)
+ram = simpy.Container(env, ram_cant, init=0)
 #se define la capacidad del cpu
-cpu = simpy.resources.resource.Resource(env, capacity=1)
+cpu = simpy.Resource(env, capacity=1)
 
 #tiempo de todos los procesos
 tiempoT = 0.0
