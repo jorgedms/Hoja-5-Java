@@ -54,13 +54,25 @@ def proceso(env, nproceso, ram, intrucc):
     #se suman todos los tiempos a tiempoT
     tiempoT = tiempoT + tiempoxproceso
 
-
+#falta definir mas entradas para el procesador
+def procesador(env):
+    #se crea proceso
+    
+    #lista de ready
+    
+    #lista de running
+    
+    #lista de waiting
+    #la lista waiting puede no ser implementada por redundancia
+    
+    #bloque final: se retorna el valor de ram y se termina el proceso
+    
 # se crea el ambiente de simulacion
 env = simpy.Environment()
 #se define el la cantidad de ram
-ram = simpy.resources.container.Container(env, ram_cant, init=0)
+ram = simpy.Container(env, ram_cant, init=0)
 #se define la capacidad del cpu
-cpu = simpy.resources.resource.Resource(env, capacity=1)
+cpu = simpy.Resource(env, capacity=1)
 
 #tiempo de todos los procesos
 tiempoT = 0.0
