@@ -76,8 +76,8 @@ cpu = simpy.Resource(env, capacity=1)
 
 #tiempo de todos los procesos
 tiempoT = 0.0
-# crear los procesos
 
+# crear los procesos
 for i in range(numeroProcesos):
     tiempo = random.randint(1, 11)
     #crear proceso

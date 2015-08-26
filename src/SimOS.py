@@ -25,12 +25,14 @@ import random
 #Titulo de inicio
 print ("Simulacion de corrida de programas en un Sistema Operativo de tiempo compartido.")
 
-#Objeto procesador
-def procesador():
-    print ("este es un procesador")
-
+#Objeto proceso
+class Proceso(object):
+    def __init__(self, name, tasks, env):
+        print ("inicio del proceso")
+        
 #se crea el ambiente de simulacion
 env = simpy.Environment()
+
 #se crea el resource
 #new: lista para los nuevos procesos
 
