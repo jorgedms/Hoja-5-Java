@@ -18,9 +18,11 @@
 import simpy
 import random
 import math
+from math import sqrt
 
 def proceso(nombre,total_instrucciones,total_ram,delay,work):
     global tiempo_final
+    global desviacion_estandar
     tiempo_inicio = 0
     
     #seccion new del diagrama
@@ -74,6 +76,8 @@ def proceso(nombre,total_instrucciones,total_ram,delay,work):
         tiempo_final = tiempo_final+end
         #se imprime el tiempo que se tomo en finalizar la tarea
         print ('Proceso No.%s finalizado en %s unidades de tiempo\n\n' %(nombre,end))
+        #elevar cada tiempo al cuadrado  y sumarlo con los otros tiempos
+        desviacion_estandar = (desviacion_estandar+(tiempo_final**2))
         
 #variables a cambiar para las simulaciones
 random.seed(9)
@@ -106,6 +110,11 @@ for i in range(procesos):
     env.process(proceso('No.%s' %i, total_instrucciones, total_ram, delay, work))
 #se inicia la simulacion
 env.run()
+#calculo del promedio
 promedio = tiempo_final/procesos
+#calculo de la desviacion estandar
+desviacion_estandar = desviacion_estandar/procesos
+desviacion_estandar = sqrt(desviacion_estandar)
 print 'El tiempo total fue de: %s' %tiempo_final
 print 'El promedio es de: %s' %promedio
+print 'La desviacion estandar es de: %s' %desviacion_estandar
