@@ -24,7 +24,7 @@ def proceso(nombre, total_instrucciones, total_ram, delay, work):
     tiempo_inicio = 0
     #seccion new del diagrama
     #delay de entrada
-    yield env.timeout(delay)
+    yield env.timeout(delay)  # @UndefinedVariable
         
     #ciclo while para mantener en el cpu
     #la comparacion cumple con el requisito de ser mayor que el ciclo de trabajo
@@ -32,7 +32,7 @@ def proceso(nombre, total_instrucciones, total_ram, delay, work):
     while (total_instrucciones>work):
         #seccion admitted del diagrama 
         #se solicita ram
-        yield ram.get(total_ram)
+        yield ram.get(total_ram) # @UndefinedVariable
         
         
         #seccion ready del diagrama
@@ -59,20 +59,18 @@ def proceso(nombre, total_instrucciones, total_ram, delay, work):
                 #print ('Proceso No.%s: cantidad de procesos restantes: %s' %(nombre, total_instrucciones))
         #se realiza el random para saber si se envia a waiting o a ready
         #1 = waiting; 2= ready
-        #send_to = random.randint(1,2)
-        if (send_to==1)
-                       
-                       with wait.request() as request_wait:
-                       #se espera hasta tener acceso al wait
-                       yield request_wait
-                       #se simula un ingreso de usuario
-                       print ('espera a ingreso de informacion')
-                       yield env.timeout(3)
-                       print ('usuario ha ingresado informacion')
-        
+
+        if(random.randint(1,2))==1:
+            with wait.request() as request_wait:  # @UndefinedVariable
+                #se espera hasta tener acceso al wait
+                yield request_wait
+                #se simula un ingreso de usuario
+                print ('espera a ingreso de informacion')
+                yield env.timeout(3)  # @UndefinedVariable
+                print ('usuario ha ingresado informacion')
     #seccion terminated del diagrama
-    yield ram.put(total_ram)
-    end = ((env.now)-tiempo_inicio)
+    yield ram.put(total_ram)  # @UndefinedVariable
+    end = ((env.now)-tiempo_inicio)  # @UndefinedVariable
     #se almacena el tiempo total de proceso y se suma a los otros
     tiempo_final = tiempo_final + end
     #se imprime el tiempo que se tomo en finalizar la tarea
