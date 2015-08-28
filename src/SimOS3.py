@@ -58,9 +58,9 @@ def proceso(nombre,total_instrucciones,total_ram,delay,work):
                 flag = flag + 1
         #se realiza el random para saber si se envia a waiting o a ready
         #1 = waiting; 2= ready
-        
-        if(random.randint(1,2)==1):
-            with wait.request as request_wait:
+        send = random.randint(1,2)
+        if(send==1):
+            with wait.request() as request_wait:
                 #se espera hasta tener acceso al wait
                 yield request_wait
                 #se simula un ingreso de usuario
@@ -79,7 +79,7 @@ def proceso(nombre,total_instrucciones,total_ram,delay,work):
 random.seed(9)
 cpu_cant = 1 #cantidad de procesadores
 ram_cant = 100 #cantidad de ram disponible
-procesos = 4 #cantidad de procesos a generar
+procesos = 25 #cantidad de procesos a generar
 work = 3 #cantidad de instrucciones por unidad de tiempo que trabaja el cpu
 intervalo = 10.0 #intervalo en el que se enviaran las instrucciones
 
