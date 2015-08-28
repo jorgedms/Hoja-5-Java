@@ -79,7 +79,7 @@ def proceso(nombre,total_instrucciones,total_ram,delay,work):
 random.seed(9)
 cpu_cant = 1 #cantidad de procesadores
 ram_cant = 100 #cantidad de ram disponible
-procesos = 25 #cantidad de procesos a generar
+procesos = 12 #cantidad de procesos a generar
 work = 3 #cantidad de instrucciones por unidad de tiempo que trabaja el cpu
 intervalo = 10.0 #intervalo en el que se enviaran las instrucciones
 
@@ -97,7 +97,7 @@ ram = simpy.Container(env, capacity= ram_cant, init= ram_cant)
 #datos finales
 tiempo_final = 0.0
 desviacion_estandar = 0.0
-
+promedio = 0.0
 #se crean los procesos
 for i in range(procesos):
     total_instrucciones = random.randint(1,10)
@@ -106,4 +106,6 @@ for i in range(procesos):
     env.process(proceso('No.%s' %i, total_instrucciones, total_ram, delay, work))
 #se inicia la simulacion
 env.run()
+promedio = tiempo_final/procesos
 print 'El tiempo total fue de: %s' %tiempo_final
+print 'El promedio es de: %s' %promedio

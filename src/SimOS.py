@@ -22,50 +22,21 @@ import time
 import math
 #from SimOS1 import promedio
 
-#DATOS GENERALES
-#semilla para generar los mismos numeros para las simulaciones
-random.seed(42)
-#la cantidad de procesos a generar
-numProcesos = 200
-intervalo = 3.0
-#cantidad de ram
-global cantRam 
-cantRam= 100
-#cantidad de instrucciones por unidad de tiempo: 3 unidades de tiempo en espera
-global cpuMax 
-cpuMax= 3
-#la cantidad de procesadores de la maquina
-#global cantProcesadores
-cantProcesadores = 1
-#cantidad de instrucciones del proceso
-#global instructions 
-#instructions = random.randint(1, 11)
-#cantidad de ram requerida por proceso
-#global ramNeed
-#ramNeed = random.randrange(1, 11)
-
-
-
-
 #la clase proceso
-def proceso (env, nombre, cpu, ram, wait, ramNeed, instrucciones):
+def proceso (env, nombre, cpu, ram, wait, ramNeed, instrucciones, stop):
     #seccion new del diagrama
-    #almacenaje del momento de creacion
-    global tiempo_total
-    time_cero = env.now
-    #impresion del tiempo 0
-    print ('proceso %s se creo en el tiempo %s' %(nombre,time_cero))
-    
-    #solicitud de ram
-    yield ram.get(ramNeed)
-    #al finalizar el yield se ingresa a la seccion ready y running
-    #time1 = tiempo en el que se incia a ejecutar el proceso
-    time_uno = env.now
-    print ('Proceso %s enviado a ready en el tiempo: %s con %s instrucciones vigentes' %(nombre, time_uno, instrucciones))
-        
+    global tiempo_total            
     #ciclo para realizar todos los procesos 
     while (instrucciones>0):
-        print ('entrada de while')
+        #solicitud de ram
+        yield ram.get(ramNeed)
+        #tiempo de retraso para envio de instruccion
+        yield env.timeout(wait)
+        
+        #toma de tiempo 0: ingreso a running
+        time_cero = env.now
+        #impresion del tiempo 0
+        print ('proceso %s se creo en el tiempo %s' %(nombre,time_cero))
         print ('Proceso %s con %s instrucciones' %(nombre, instrucciones))
         #se solicita el recurso de cpu, o entrada a running
         with cpu.request() as request:
@@ -130,10 +101,26 @@ def generador (env, numProcesos,intervalo,cpu,wait,ram):
         for i in range(numProcesos):
             ramNeed = random.randint(1, 10)
             instrucciones = random.randint(1, 10)
-            newProceso = proceso(env, 'No.%s' %i, cpu, ram, wait, ramNeed, instrucciones)
-            env.process(newProceso)
-            delay = random.expovariate(1.0/intervalo)
-            yield env.timeout(delay)
+            stop = random.expovariate(1.0/intervalo)
+            env.process(proceso(env, 'No.%s' %i, cpu, ram, wait, ramNeed, instrucciones, stop))
+
+
+
+#DATOS GENERALES
+#semilla para generar los mismos numeros para las simulaciones
+random.seed(42)
+#la cantidad de procesos a generar
+numProcesos = 200
+intervalo = 3.0
+#cantidad de ram
+global cantRam 
+cantRam= 100
+#cantidad de instrucciones por unidad de tiempo: 3 unidades de tiempo en espera
+global cpuMax 
+cpuMax= 3
+#la cantidad de procesadores de la maquina
+#global cantProcesadores
+cantProcesadores = 1
 
 #DATOS DE AMBIENTE DE SIMULACION
 #se crea el ambiente de simulacion
@@ -150,9 +137,7 @@ wait = simpy.Resource(env, capacity=1)
 #DATOS DE PROCESOS
 global tiempo_total
 tiempo_total = 0
-
-
-env.process(generador(env, numProcesos, intervalo, cpu, wait, ram))
+generador(env, numProcesos, intervalo, cpu, wait, ram)
 env.run()   
 
 global promedio

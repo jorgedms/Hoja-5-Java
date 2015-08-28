@@ -33,16 +33,12 @@ def proceso(nombre, total_instrucciones, total_ram, delay, work):
         #seccion admitted del diagrama 
         #se solicita ram
         yield ram.get(total_ram) # @UndefinedVariable
-        
-        
         #seccion ready del diagrama
         tiempo_inicio = env.now
         #se imprime el tiempo de ingreso, cantidad de procesos y ram requerida
         print ('Proceso No.%s:  ingreso en:%s con: %s procesos y %s de ram' %(nombre, tiempo_inicio,total_instrucciones, total_ram))
         #se imprime la cantidad de ram restante
         print ('RAM restante: %s' %ram.level)
-        
-        
         #seccion running del diagrama
         with cpu.request() as request:
             yield request
@@ -61,7 +57,7 @@ def proceso(nombre, total_instrucciones, total_ram, delay, work):
         #1 = waiting; 2= ready
 
         if(random.randint(1,2))==1:
-            with wait.request() as request_wait:  # @UndefinedVariable
+            with wait.request as request_wait:
                 #se espera hasta tener acceso al wait
                 yield request_wait
                 #se simula un ingreso de usuario
